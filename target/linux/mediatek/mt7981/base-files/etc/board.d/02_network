@@ -23,6 +23,7 @@ mediatek_setup_interfaces()
 		ucidef_set_interfaces_lan_wan "lan1 lan2 lan3 lan4" wan
 		;;
 	komi,a31 |\
+	jcg,q30 |\
 	*360,t7*)
 		ucidef_set_interfaces_lan_wan "eth0 ra0 ra1 rai0 rai1" "eth1"
 		ucidef_add_switch "switch0" \
