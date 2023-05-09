@@ -7,6 +7,7 @@ platform_do_upgrade() {
 	*360,t7* |\
 	xiaomi,wr30u* |\
 	komi,a31 |\
+	jcg,q30 |\
 	*snand*)
 		nand_do_upgrade "$1"
 		;;
@@ -31,6 +32,7 @@ platform_check_image() {
 	*360,t7* |\
 	xiaomi,wr30u* |\
 	komi,a31 |\
+	jcg,q30 |\
 	*snand* |\
 	*emmc*)
 		# tar magic `ustar`
