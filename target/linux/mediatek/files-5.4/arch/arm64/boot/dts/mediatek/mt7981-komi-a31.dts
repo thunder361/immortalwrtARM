@@ -141,7 +141,15 @@
         mdio: mdio-bus {
                 #address-cells = <1>;
                 #size-cells = <0>;
-        };
+        
+		phy5: phy@5 {
+			compatible = "ethernet-phy-id67c9.de0a";
+			reg = <5>;
+			reset-gpios = <&pio 14 1>;
+			reset-assert-us = <600>;
+			reset-deassert-us = <20000>;
+		};		
+	};
 };
 
 &gsw {
@@ -179,6 +187,7 @@
 &hnat {
         mtketh-wan = "eth1";
         mtketh-lan = "eth0";
+		mtketh-ppd = "eth0";
         mtketh-max-gmac = <2>;
         status = "okay";
 };
