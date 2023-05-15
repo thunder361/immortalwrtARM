@@ -22,7 +22,7 @@ komi,a31)
         ucidef_set_led_default "red" "RED" "led_red" "0"
         ucidef_set_led_netdev "blue" "BLUE" "led_blue" "eth1"
         ;;
-*jcg,q30*)
+*jcg,q30_pro*)
 	ucidef_set_led_default "green" "GREEN" "led_green" "1"
 	ucidef_set_led_default "red" "RED" "led_red" "0"
 	;;
