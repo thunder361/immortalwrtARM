@@ -112,43 +112,38 @@
 };
 
 &eth {
-        status = "okay";
+    status = "okay";
 
-        gmac0: mac@0 {
-                compatible = "mediatek,eth-mac";
-                reg = <0>;
-                phy-mode = "2500base-x";
+    gmac0: mac@0 {
+        compatible = "mediatek,eth-mac";
+        reg = <0>;
+        phy-mode = "2500base-x";
 
-                fixed-link {
-                        speed = <2500>;
-                        full-duplex;
-                        pause;
-                };
+        fixed-link {
+            speed = <2500>;
+            full-duplex;
+            pause;
         };
+    };
 
-        gmac1: mac@1 {
-                compatible = "mediatek,eth-mac";
-                reg = <1>;
-                phy-mode = "2500base-x";
+    gmac1: mac@1 {
+        compatible = "mediatek,eth-mac";
+        reg = <1>;
+        phy-mode = "gmii";
+        phy-handle = <&phy0>;
+    };
 
-                fixed-link {
-                        speed = <2500>;
-                        full-duplex;
-                        pause;
-                };
-        };
+    mdio: mdio-bus {
+		#address-cells = <1>;
+		#size-cells = <0>;
 
-        mdio: mdio-bus {
-                #address-cells = <1>;
-                #size-cells = <0>;
-        
-		phy5: phy@5 {
-			compatible = "ethernet-phy-id67c9.de0a";
-			reg = <5>;
-			reset-gpios = <&pio 14 1>;
-			reset-assert-us = <600>;
-			reset-deassert-us = <20000>;
-		};		
+		phy0: ethernet-phy@0 {
+			compatible = "ethernet-phy-id03a2.9461";
+			reg = <0>;
+			phy-mode = "gmii";
+			nvmem-cells = <&phy_calibration>;
+			nvmem-cell-names = "phy-cal-data";
+		};
 	};
 };
 
@@ -187,7 +182,7 @@
 &hnat {
         mtketh-wan = "eth1";
         mtketh-lan = "eth0";
-		mtketh-ppd = "eth0";
+		reset-names = "mtketh";
         mtketh-max-gmac = <2>;
         status = "okay";
 };
