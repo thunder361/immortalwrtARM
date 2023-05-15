@@ -716,7 +716,7 @@ setup_model()
 	*7981* |\
 	xiaomi,wr30u* |\
 	komi,a31 |\
-	jcg,q30 |\
+	jcg,q30_pro |\
 	*360,t7*)
 		MT7981_whnat $num_of_wifi
 		;;
