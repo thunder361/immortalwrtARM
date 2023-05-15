@@ -258,12 +258,12 @@ define Device/komi_a31
 endef
 TARGET_DEVICES += komi_a31
 
-define Device/mt7981-jcg-q30
+define Device/mt7981-jcg-q30_pro
   DEVICE_VENDOR := MediaTek
-  DEVICE_MODEL := JCG Q30
-  DEVICE_DTS := mt7981-jcg-q30
+  DEVICE_MODEL := JCG Q30 PRO
+  DEVICE_DTS := mt7981-jcg-q30_pro
   DEVICE_DTS_DIR := $(DTS_DIR)/mediatek
-  SUPPORTED_DEVICES := jcg,q30
+  SUPPORTED_DEVICES := jcg,q30_pro
   UBINIZE_OPTS := -E 5
   BLOCKSIZE := 128k
   PAGESIZE := 2048
@@ -273,4 +273,5 @@ define Device/mt7981-jcg-q30
   IMAGE/factory.bin := append-ubi | check-size $$$$(IMAGE_SIZE)
   IMAGE/sysupgrade.bin := sysupgrade-tar | append-metadata
 endef
-TARGET_DEVICES += mt7981-jcg-q30
+TARGET_DEVICES += mt7981-jcg-q30_pro
+
