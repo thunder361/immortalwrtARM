@@ -4,8 +4,7 @@
 	model = "CMCC A10";
 	compatible = "cmcc,a10", "mediatek,mt7981";
 	chosen {
-		bootargs = "console=ttyS0,115200n1 loglevel=8  \
-				earlycon=uart8250,mmio32,0x11002000";
+		bootargs = "console=ttyS0,115200n1 loglevel=8 earlycon=uart8250,mmio32,0x11002000";
 	};
 
 	memory {
@@ -24,7 +23,7 @@
 			  label = "led_lan3";
 			  gpios = <&pio 9 GPIO_ACTIVE_LOW>;
 		};
-    led_sys {
+                led_sys {
 			  label = "led_sys";
 			  gpios = <&pio 11 GPIO_ACTIVE_LOW>;
 		};
@@ -111,7 +110,7 @@
 			label = "wan";
 		};
     
-    port@5 {
+                port@5 {
 			reg = <5>;
 			ethernet = <&gmac0>;
 			phy-mode = "2500base-x";
@@ -120,7 +119,7 @@
 				speed = <2500>;
 				full-duplex;
 				pause;
-			};
+		};
       
 		port@6 {
 			reg = <6>;
