@@ -6,10 +6,10 @@
         compatible = "komi,a31", "mediatek,mt7981";
 
         aliases {
-                led-boot = &red_led;
-                led-failsafe = &red_led;
-                led-running = &green_led;
-                led-upgrade = &green_led;
+            led-boot = &red_led;
+            led-failsafe = &red_led;
+            led-running = &green_led;
+            led-upgrade = &green_led;
         };
 
         chosen {
@@ -54,12 +54,15 @@
                         };
         };
 
-        gsw: gsw@0 {
-                compatible = "mediatek,mt753x";
-                mediatek,ethsys = <&ethsys>;
-                #address-cells = <1>;
-                #size-cells = <0>;
-        };
+	reg_3p3v: regulator-3p3v {
+		compatible = "regulator-fixed";
+		regulator-name = "fixed-3.3V";
+		regulator-min-microvolt = <3300000>;
+		regulator-max-microvolt = <3300000>;
+		regulator-boot-on;
+		regulator-always-on;
+	};
+};
 
 	nmbm_spim_nand {
                 compatible = "generic,nmbm";
@@ -69,37 +72,31 @@
                 lower-mtd-device = <&spi_nand>;
                 forced-create;
 
-                partitions {
-                        compatible = "fixed-partitions";
-                        #address-cells = <0x01>;
-                        #size-cells = <0x01>;
+        		partitions {
+			        compatible = "fixed-partitions";
+			        #address-cells = <1>;
+			        #size-cells = <1>;
 
-                        partition@0 {
-                                label = "BL2";
-                                reg = <0x00 0x100000>;
-				read-only;
-                        };
-
-                        partition@100000 {
-                                label = "u-boot-env";
-                                reg = <0x100000 0x80000>;
-                        };
-
-                        partition@180000 {
-                                label = "Factory";
-                                reg = <0x180000 0x200000>;
-                        };
-
-                        partition@380000 {
-                                label = "FIP";
-                                reg = <0x380000 0x200000>;
-                        };
-
-                        partition@580000 {
-                                label = "ubi";
-                                reg = <0x580000 0x7000000>;
-                        };
-                };
+			        partition@00000 {
+				        label = "BL2";
+				        reg = <0x00000 0x100000>;
+		          	};
+			    partition@100000 {
+				    label = "u-boot-env";
+				    reg = <0x100000 0x80000>;
+			    };
+			    factory: partition@180000 {
+				    label = "Factory";
+				    reg = <0x180000 0x200000>;
+			    };
+			    partition@380000 {
+				    label = "FIP";
+				    reg = <0x380000 0x200000>;
+			    };
+			    partition@580000 {
+			    	label = "ubi";
+			    	reg = <0x580000 0x7000000>;
+		     	};
         };
 };
 
@@ -133,7 +130,7 @@
         phy-handle = <&phy0>;
     };
 
-    mdio: mdio-bus {
+&mdio-bus {
 	#address-cells = <1>;
 	#size-cells = <0>;
 
@@ -144,53 +141,64 @@
 	    nvmem-cells = <&phy_calibration>;
 	    nvmem-cell-names = "phy-cal-data";
 	};
+	switch0: switch@0 {
+		compatible = "mediatek,mt7531";
+		reg = <31>;
+		dsa,member = <0 0>;
+		reset-gpios = <&pio 39 GPIO_ACTIVE_HIGH>;
+		interrupt-controller;
+		#interrupt-cells = <1>;
+		interrupt-parent = <&pio>;
+		interrupts = <38 IRQ_TYPE_LEVEL_HIGH>;
     };
 };
 
-&gsw {
-        mediatek,mdio = <&mdio>;
-        mediatek,mdio_master_pinmux = <0>;
-        reset-gpios = <&pio 39 0>;
-        interrupt-parent = <&pio>;
-        interrupts = <38 IRQ_TYPE_LEVEL_HIGH>;
-        status = "okay";
+&switch0 {
+	ports {
+		#address-cells = <1>;
+		#size-cells = <0>;
 
-        port5: port@5 {
-                compatible = "mediatek,mt753x-port";
-                reg = <5>;
-                phy-mode = "sgmii";
+		port@0 {
+			reg = <0>;
+			label = "lan1";
+		};
 
-                fixed-link {
-                        speed = <2500>;
-                        full-duplex;
-                };
-        };
+		port@1 {
+			reg = <1>;
+			label = "lan2";
+		};
 
-        port6: port@6 {
-                compatible = "mediatek,mt753x-port";
-                mediatek,ssc-on;
-                reg = <6>;
-                phy-mode = "sgmii";
+		port@2 {
+			reg = <2>;
+			label = "lan3";
+		};
 
-                fixed-link {
-                        speed = <2500>;
-                        full-duplex;
-                };
-        };
+		port@6 {
+			reg = <6>;
+			ethernet = <15>;
+			phy-mode = "2500base-x";
+
+			fixed-link {
+				speed = <2500>;
+				full-duplex;
+				pause;
+			};
+		};
+	};
 };
 
 &hnat {
         mtketh-wan = "eth1";
         mtketh-lan = "eth0";
-	reset-names = "mtketh";
+	    reset-names = "mtketh";
         mtketh-max-gmac = <2>;
         status = "okay";
 };
 
-&mmc2 {
+&mmc0 {
 	pinctrl-names = "default", "state_uhs";
-	pinctrl-0 = <&mmc2_pins_default>;
-	pinctrl-1 = <&mmc2_pins_uhs>;
+	pinctrl-0 = <&mmc0_pins_default>;
+	pinctrl-1 = <&mmc0_pins_uhs>;
 	bus-width = <8>;
 	max-frequency = <52000000>;
 	cap-mmc-highspeed;
@@ -222,54 +230,33 @@
 };
 
 &pio {
-        pwm0_pin: pwm0-pin-g0 {
-                mux {
-                        function = "pwm";
-                        groups = "pwm0_0";
-                };
+    spi0_flash_pins: spi0-pins {
+        mux {
+            function = "spi";
+            groups = "spi0", "spi0_wp_hold";
         };
 
-        pwm1_pin: pwm1-pin-g0 {
-                mux {
-                        function = "pwm";
-                        groups = "pwm1_0";
-                };
+        conf-pu {
+            pins = "SPI0_CS", "SPI0_HOLD", "SPI0_WP";
+            drive-strength = <MTK_DRIVE_8mA>;
+            bias-pull-up = <MTK_PUPD_SET_R1R0_11>;
         };
 
-        pwm2_pin: pwm2-pin {
-                mux {
-                        function = "pwm";
-                        groups = "pwm2";
-                };
+        conf-pd {
+            pins = "SPI0_CLK", "SPI0_MOSI", "SPI0_MISO";
+            drive-strength = <MTK_DRIVE_8mA>;
+            bias-pull-down = <MTK_PUPD_SET_R1R0_11>;
         };
+    };
 
-        spi0_flash_pins: spi0-pins {
-                mux {
-                        function = "spi";
-                        groups = "spi0", "spi0_wp_hold";
-                };
-
-                conf-pu {
-                        pins = "SPI0_CS", "SPI0_HOLD", "SPI0_WP";
-                        drive-strength = <MTK_DRIVE_8mA>;
-                        bias-pull-up = <MTK_PUPD_SET_R1R0_11>;
-                };
-
-                conf-pd {
-                        pins = "SPI0_CLK", "SPI0_MOSI", "SPI0_MISO";
-                        drive-strength = <MTK_DRIVE_8mA>;
-                        bias-pull-down = <MTK_PUPD_SET_R1R0_11>;
-                };
-        };
-
-	mmc2_pins_default: mmc2-pins-default {
+	mmc0_pins_default: mmc0-pins-default {
 		mux {
 			function = "flash";
 			groups = "emmc_45";
 		};
         }; 
 
-	mmc2_pins_uhs: mmc2-pins-uhs {
+	mmc0_pins_uhs: mmc0-pins-uhs {
 		mux {
 			function = "flash";
 			groups = "emmc_45";
