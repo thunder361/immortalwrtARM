@@ -26,6 +26,10 @@ komi,a31)
 	ucidef_set_led_default "green" "GREEN" "led_green" "1"
 	ucidef_set_led_default "red" "RED" "led_red" "0"
 	;;
+cmcc,a10*)
+        ucidef_set_led_default "wan_internet_blue" "BLUE" "led_blue" "1"
+	ucidef_set_led_default "sys_blue" "BLUE" "led_blue" "1"
+	ucidef_set_led_default "lan3_blue" "BLUE" "led_blue" "1"
 esac
 board_config_flush
 
