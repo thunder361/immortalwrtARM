@@ -187,6 +187,18 @@
         status = "okay";
 };
 
+&mmc0 {
+	pinctrl-names = "default", "state_uhs";
+	pinctrl-0 = <&mmc0_pins_default>;
+	pinctrl-1 = <&mmc0_pins_uhs>;
+	bus-width = <8>;
+	max-frequency = <52000000>;
+	cap-mmc-highspeed;
+	vmmc-supply = <&reg_3p3v>;
+	non-removable;
+	status = "okay";
+};
+
 &spi0 {
         pinctrl-names = "default";
         pinctrl-0 = <&spi0_flash_pins>;
@@ -248,6 +260,20 @@
                         drive-strength = <MTK_DRIVE_8mA>;
                         bias-pull-down = <MTK_PUPD_SET_R1R0_11>;
                 };
+        };
+
+	mmc0_pins_default: mmc0-pins-default {
+		mux {
+			function = "flash";
+			groups = "emmc_45";
+		};
+        }; 
+
+	mmc0_pins_uhs: mmc0-pins-uhs {
+		mux {
+			function = "flash";
+			groups = "emmc_45";
+		};
         };
 
         uart1_pins: uart1-pins-g1 {
