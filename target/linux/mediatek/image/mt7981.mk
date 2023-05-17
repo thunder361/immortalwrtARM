@@ -275,3 +275,20 @@ define Device/mt7981-jcg-q30_pro
 endef
 TARGET_DEVICES += mt7981-jcg-q30_pro
 
+define Device/mt7981-cmcc-a10
+  DEVICE_VENDOR := MediaTek
+  DEVICE_MODEL := CMCC A10
+  DEVICE_DTS := mt7981-cmcc-a10
+  DEVICE_DTS_DIR := $(DTS_DIR)/mediatek
+  SUPPORTED_DEVICES := cmcc,a10
+  UBINIZE_OPTS := -E 5
+  BLOCKSIZE := 128k
+  PAGESIZE := 2048
+  IMAGE_SIZE := 114688k
+  KERNEL_IN_UBI := 1
+  IMAGES += factory.bin
+  IMAGE/factory.bin := append-ubi | check-size $$$$(IMAGE_SIZE)
+  IMAGE/sysupgrade.bin := sysupgrade-tar | append-metadata
+endef
+TARGET_DEVICES += mt7981-cmcc-a10
+
