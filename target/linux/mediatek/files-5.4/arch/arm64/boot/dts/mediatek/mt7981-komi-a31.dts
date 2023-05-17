@@ -187,10 +187,10 @@
         status = "okay";
 };
 
-&mmc0 {
+&mmc2 {
 	pinctrl-names = "default", "state_uhs";
-	pinctrl-0 = <&mmc0_pins_default>;
-	pinctrl-1 = <&mmc0_pins_uhs>;
+	pinctrl-0 = <&mmc2_pins_default>;
+	pinctrl-1 = <&mmc2_pins_uhs>;
 	bus-width = <8>;
 	max-frequency = <52000000>;
 	cap-mmc-highspeed;
@@ -262,14 +262,14 @@
                 };
         };
 
-	mmc0_pins_default: mmc0-pins-default {
+	mmc2_pins_default: mmc2-pins-default {
 		mux {
 			function = "flash";
 			groups = "emmc_45";
 		};
         }; 
 
-	mmc0_pins_uhs: mmc0-pins-uhs {
+	mmc2_pins_uhs: mmc2-pins-uhs {
 		mux {
 			function = "flash";
 			groups = "emmc_45";
