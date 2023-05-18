@@ -112,56 +112,38 @@
 };
 
 &eth {
-        status = "okay";
+	status = "okay";
 
-        gmac0: mac@0 {
-                compatible = "mediatek,eth-mac";
-                reg = <0>;
-                phy-mode = "2500base-x";
+	gmac0: mac@0 {
+		compatible = "mediatek,eth-mac";
+		reg = <0>;
+		phy-mode = "2500base-x";
+		fixed-link {
+			speed = <2500>;
+			full-duplex;
+			pause;
+		};
+	};
 
-                fixed-link {
-                        speed = <2500>;
-                        full-duplex;
-                        pause;
-                };
-        };
-
-        gmac1: mac@1 {
-                compatible = "mediatek,eth-mac";
-                reg = <1>;
-                phy-mode = "2500base-x";
-
-                fixed-link {
-                        speed = <2500>;
-                        full-duplex;
-                        pause;
-                };
-        };
-
+	gmac1: mac@1 {
+		compatible = "mediatek,eth-mac";
+		reg = <1>;
+		phy-mode = "gmii";
+		phy-handle = <&phy0>;
+	};
+	
         mdio: mdio-bus {
                 #address-cells = <1>;
                 #size-cells = <0>;
         };
-};
 
-&gsw {
-        mediatek,mdio = <&mdio>;
-        mediatek,mdio_master_pinmux = <0>;
-        reset-gpios = <&pio 39 0>;
-        interrupt-parent = <&pio>;
-        interrupts = <38 IRQ_TYPE_LEVEL_HIGH>;
-        status = "okay";
-
-        port5: port@5 {
-                compatible = "mediatek,mt753x-port";
-                reg = <5>;
-                phy-mode = "sgmii";
-
-                fixed-link {
-                        speed = <2500>;
-                        full-duplex;
-                };
-        };
+	phy0: ethernet-phy@0 {
+		compatible = "ethernet-phy-id03a2.9461";
+		reg = <0>;
+		phy-mode = "gmii";
+		nvmem-cells = <&phy_calibration>;
+		nvmem-cell-names = "phy-cal-data";
+	};
 
         port6: port@6 {
                 compatible = "mediatek,mt753x-port";
@@ -180,7 +162,7 @@
 &hnat {
         mtketh-wan = "eth1";
         mtketh-lan = "eth0";
-	    reset-names = "mtketh";
+	reset-names = "mtketh";
         mtketh-max-gmac = <2>;
         status = "okay";
 };
