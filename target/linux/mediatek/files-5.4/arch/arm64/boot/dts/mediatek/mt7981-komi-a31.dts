@@ -112,83 +112,70 @@
 };
 
 &eth {
-    status = "okay";
+        status = "okay";
 
-    gmac0: mac@0 {
-        compatible = "mediatek,eth-mac";
-        reg = <0>;
-        phy-mode = "2500base-x";
+        gmac0: mac@0 {
+                compatible = "mediatek,eth-mac";
+                reg = <0>;
+                phy-mode = "2500base-x";
 
-        fixed-link {
-            speed = <2500>;
-            full-duplex;
-            pause;
+                fixed-link {
+                        speed = <2500>;
+                        full-duplex;
+                        pause;
+                };
         };
-    };
 
-    gmac1: mac@1 {
-        compatible = "mediatek,eth-mac";
-        reg = <1>;
-        phy-mode = "gmii";
-        phy-handle = <&phy0>;
-    };
+        gmac1: mac@1 {
+                compatible = "mediatek,eth-mac";
+                reg = <1>;
+                phy-mode = "2500base-x";
 
-&mdio-bus {
-	#address-cells = <1>;
-	#size-cells = <0>;
+                fixed-link {
+                        speed = <2500>;
+                        full-duplex;
+                        pause;
+                };
+        };
 
-	phy0: ethernet-phy@0 {
-	    compatible = "ethernet-phy-id03a2.9461";
-	    reg = <0>;
-	    phy-mode = "gmii";
-	    nvmem-cells = <&phy_calibration>;
-	    nvmem-cell-names = "phy-cal-data";
-	};
-	switch0: switch@0 {
-	    compatible = "mediatek,mt7531";
-	    reg = <31>;
-	    dsa,member = <0 0>;
-	    reset-gpios = <&pio 39 GPIO_ACTIVE_HIGH>;
-	    interrupt-controller;
-	    #interrupt-cells = <1>;
-	    interrupt-parent = <&pio>;
-	    interrupts = <38 IRQ_TYPE_LEVEL_HIGH>;
+        mdio: mdio-bus {
+                #address-cells = <1>;
+                #size-cells = <0>;
         };
 };
 
-&switch0 {
-	ports {
-		#address-cells = <1>;
-		#size-cells = <0>;
+&gsw {
+        mediatek,mdio = <&mdio>;
+        mediatek,mdio_master_pinmux = <0>;
+        reset-gpios = <&pio 39 0>;
+        interrupt-parent = <&pio>;
+        interrupts = <38 IRQ_TYPE_LEVEL_HIGH>;
+        status = "okay";
 
-		port@0 {
-			reg = <0>;
-			label = "lan1";
-		};
+        port5: port@5 {
+                compatible = "mediatek,mt753x-port";
+                reg = <5>;
+                phy-mode = "sgmii";
 
-		port@1 {
-			reg = <1>;
-			label = "lan2";
-		};
+                fixed-link {
+                        speed = <2500>;
+                        full-duplex;
+                };
+        };
 
-		port@2 {
-			reg = <2>;
-			label = "lan3";
-		};
+        port6: port@6 {
+                compatible = "mediatek,mt753x-port";
+                mediatek,ssc-on;
+                reg = <6>;
+                phy-mode = "sgmii";
 
-		port@6 {
-			reg = <6>;
-			ethernet = <15>;
-			phy-mode = "2500base-x";
-
-			fixed-link {
-			    speed = <2500>;
-			    full-duplex;
-			    pause;
-			};
-		};
-	};
+                fixed-link {
+                        speed = <2500>;
+                        full-duplex;
+                };
+        };
 };
+
 
 &hnat {
         mtketh-wan = "eth1";
