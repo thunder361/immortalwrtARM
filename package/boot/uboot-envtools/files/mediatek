@@ -13,11 +13,13 @@ touch /etc/config/ubootenv
 board=$(board_name)
 
 case "$board" in
-komi,a31 |\
+*komi,a31* |\
 *360,t7*)
 	ubootenv_add_uci_config "/dev/mtd2" "0x0" "0x20000" "0x20000" "1"
 	;;
-xiaomi,wr30u*)
+*jcg,q30_pro* |\
+*cmcc,a10* |\
+*xiaomi,wr30u*)
         ubootenv_add_uci_config "/dev/mtd2" "0x0" "0x10000" "0x20000" "1"
         ;;
 esac
