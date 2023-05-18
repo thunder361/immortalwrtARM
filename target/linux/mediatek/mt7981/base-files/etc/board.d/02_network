@@ -14,7 +14,7 @@ mediatek_setup_interfaces()
 		ucidef_add_switch "switch0" \
 			"0:lan" "1:lan" "2:lan" "3:lan" "4:wan" "6u@eth0" "5u@eth1"
 		;;
-	komi,a31 |\
+	*komi,a31* |\
 	*gsw*)
 		ucidef_set_interfaces_lan_wan "eth0" "eth1"
 		ucidef_add_switch "switch0" \
@@ -23,13 +23,13 @@ mediatek_setup_interfaces()
 	*2500wan-p5*)
 		ucidef_set_interfaces_lan_wan "lan1 lan2 lan3 lan4" wan
 		;;
-	cmcc,a10 |\
+	*cmcc,a10* |\
 	*360,t7*)
 		ucidef_set_interfaces_lan_wan "eth0 ra0 ra1 rai0 rai1" "eth1"
 		ucidef_add_switch "switch0" \
 			"0:lan" "1:lan" "2:lan" "3:wan" "6u@eth0" "5u@eth1"
 		;;
-	jcg,q30_pro |\
+	*jcg,q30_pro* |\
 	xiaomi,wr30u*)
                 ucidef_set_interfaces_lan_wan "eth0 ra0 ra1 rai0 rai1" "eth1"
                 ucidef_add_switch "switch0" \
@@ -102,19 +102,19 @@ mediatek_setup_macs()
 			fi
 		fi
 		;;
-	xiaomi,wr30u*)
+	*xiaomi,wr30u*)
 		wan_mac=$(mtd_get_mac_ascii Bdata ethaddr_wan)
 		lan_mac=$(mtd_get_mac_ascii Bdata ethaddr)
 		;;
-	komi,a31*)
+	*komi,a31*)
                 lan_mac=$(mtd_get_mac_ascii "u-boot-env" ethaddr)
                 wan_mac=$(macaddr_add "$lan_mac" 1)
                 ;;
-	jcg,q30_pro*)
+	*jcg,q30_pro*)
                 lan_mac=$(mtd_get_mac_ascii "u-boot-env" ethaddr)
                 wan_mac=$(macaddr_add "$lan_mac" 1)
                 ;;
-	cmcc,a10*)
+	*cmcc,a10*)
                 lan_mac=$(mtd_get_mac_ascii "u-boot-env" ethaddr)
                 wan_mac=$(macaddr_add "$lan_mac" 1)
                 ;;
