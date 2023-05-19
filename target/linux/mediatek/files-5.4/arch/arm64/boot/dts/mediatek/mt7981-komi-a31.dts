@@ -15,6 +15,7 @@
         chosen {
                 bootargs = "console=ttyS0,115200n1 loglevel=8 earlycon=uart8250,mmio32,0x11002000";
         };
+	
         reg_3p3v: regulator-3p3v {
 		compatible = "regulator-fixed";
 		regulator-name = "fixed-3.3V";
@@ -210,6 +211,20 @@
 };
 
 &pio {
+        mmc0_pins_default: mmc0-pins-default {
+                mux {
+                        function = "flash";
+                        groups = "emmc_45";
+                };
+        };
+		
+        mmc0_pins_default: mmc0-pins-uhs {
+                mux {
+                        function = "flash";
+                        groups = "emmc_45";
+                };
+        };
+
         pwm0_pin: pwm0-pin-g0 {
                 mux {
                         function = "pwm";
