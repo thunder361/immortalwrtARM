@@ -13,12 +13,12 @@ touch /etc/config/ubootenv
 board=$(board_name)
 
 case "$board" in
+*jcg,q30_pro* |\
+*cmcc,a10* |\
 *komi,a31* |\
 *360,t7*)
 	ubootenv_add_uci_config "/dev/mtd2" "0x0" "0x20000" "0x20000" "1"
 	;;
-*jcg,q30_pro* |\
-*cmcc,a10* |\
 *xiaomi,wr30u*)
         ubootenv_add_uci_config "/dev/mtd2" "0x0" "0x10000" "0x20000" "1"
         ;;
