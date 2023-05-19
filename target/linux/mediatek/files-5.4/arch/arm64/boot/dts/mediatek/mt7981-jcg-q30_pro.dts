@@ -49,13 +49,6 @@
                         };
         };
 
-        gsw: gsw@0 {
-                compatible = "mediatek,mt753x";
-                mediatek,ethsys = <&ethsys>;
-                #address-cells = <1>;
-                #size-cells = <0>;
-        };
-
 	nmbm_spim_nand {
                 compatible = "generic,nmbm";
                 #address-cells = <1>;
@@ -140,9 +133,17 @@
 			nvmem-cell-names = "phy-cal-data";
 		};
 	};
+	
+    gsw: gsw@0 {
+    compatible = "mediatek,mt753x";
+    mediatek,ethsys = <&ethsys>;
+    #address-cells = <1>;
+    #size-cells = <0>;
+    };
 };
 
 &gsw {
+        compatible = "mediatek,mt7531";
         mediatek,mdio = <&mdio>;
         mediatek,mdio_master_pinmux = <0>;
         reset-gpios = <&pio 39 0>;
@@ -150,21 +151,11 @@
         interrupts = <38 IRQ_TYPE_LEVEL_HIGH>;
         status = "okay";
 
-        port5: port@5 {
-                compatible = "mediatek,mt753x-port";
-                reg = <5>;
-                phy-mode = "sgmii";
-
-                fixed-link {
-                        speed = <2500>;
-                        full-duplex;
-                };
-        };
-
         port6: port@6 {
                 compatible = "mediatek,mt753x-port";
                 mediatek,ssc-on;
                 reg = <6>;
+		ethernet = <20>
                 phy-mode = "sgmii";
 
                 fixed-link {
@@ -177,7 +168,7 @@
 &hnat {
         mtketh-wan = "eth1";
         mtketh-lan = "lan";
-		reset-names = "mtketh";
+	reset-names = "mtketh";
         mtketh-max-gmac = <2>;
         status = "okay";
 };
