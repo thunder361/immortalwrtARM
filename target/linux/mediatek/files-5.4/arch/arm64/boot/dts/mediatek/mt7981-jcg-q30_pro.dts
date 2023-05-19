@@ -25,17 +25,12 @@
 
                 green_led: led_green {
                         label = "led_green";
-                        gpios = <&pio 8 GPIO_ACTIVE_LOW>;
-                };
-
-                led_blue {
-                        label = "led_blue";
                         gpios = <&pio 13 GPIO_ACTIVE_LOW>;
                 };
 
                 red_led: led_red {
                         label = "led_red";
-                        gpios = <&pio 34 GPIO_ACTIVE_LOW>;
+                        gpios = <&pio 8 GPIO_ACTIVE_LOW>;
                 };
         };
 
