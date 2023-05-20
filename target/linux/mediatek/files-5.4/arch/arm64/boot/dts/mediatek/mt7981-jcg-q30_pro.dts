@@ -49,6 +49,13 @@
                         };
         };
 
+        gsw: gsw@0 {
+                compatible = "mediatek,mt753x";
+                mediatek,ethsys = <&ethsys>;
+                #address-cells = <1>;
+                #size-cells = <0>;
+        };
+	
 	nmbm_spim_nand {
                 compatible = "generic,nmbm";
                 #address-cells = <1>;
