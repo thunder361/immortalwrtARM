@@ -9,6 +9,7 @@ mediatek_setup_interfaces()
 	local board="$1"
 
 	case $board in
+	*cmcc,a10* |\
 	*fpga*)
 		ucidef_set_interfaces_lan_wan "eth0" "eth1"
 		ucidef_add_switch "switch0" \
@@ -23,17 +24,22 @@ mediatek_setup_interfaces()
 	*2500wan-p5*)
 		ucidef_set_interfaces_lan_wan "lan1 lan2 lan3 lan4" wan
 		;;
-	*cmcc,a10* |\
 	*360,t7*)
-		ucidef_set_interfaces_lan_wan "eth0 ra0 ra1 rai0 rai1" "eth1"
+		ucidef_set_interfaces_lan_wan "eth0" "eth1"
 		ucidef_add_switch "switch0" \
 			"0:lan" "1:lan" "2:lan" "3:wan" "6u@eth0" "5u@eth1"
 		;;
 	*jcg,q30_pro* |\
-	xiaomi,wr30u*)
-                ucidef_set_interfaces_lan_wan "eth0 ra0 ra1 rai0 rai1" "eth1"
-                ucidef_add_switch "switch0" \
-                        "1:lan" "2:lan" "3:lan" "0:wan" "6u@eth0" "5u@eth1"
+	*wr30u*)
+		ucidef_set_interfaces_lan_wan "eth0" "eth1"
+		ucidef_add_switch "switch0" \
+			"1:lan" "2:lan" "3:lan" "0:wan" "6u@eth0" "5u@eth1"
+	;;
+	*mt3000* |\
+	*x3000* |\
+	*xe3000* |\
+	*mt2500*)
+		ucidef_set_interfaces_lan_wan "eth1" "eth0"
 		;;
 	*)
 		ucidef_set_interfaces_lan_wan "lan1 lan2 lan3 lan4" eth1
