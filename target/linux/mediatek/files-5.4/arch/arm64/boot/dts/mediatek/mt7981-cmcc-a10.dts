@@ -136,8 +136,9 @@
 
 &gsw {
 	mediatek,mdio = <&mdio>;
+	mediatek,portmap = "llllw";
 	mediatek,mdio_master_pinmux = <0>;
-	reset-gpios = <&pio 39 0>;
+	reset-gpios = <&pio 54 0>;
 	interrupt-parent = <&pio>;
 	interrupts = <38 IRQ_TYPE_LEVEL_HIGH>;
 	status = "okay";
