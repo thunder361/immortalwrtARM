@@ -136,14 +136,6 @@
                 #address-cells = <1>;
                 #size-cells = <0>;
         };
-
-	phy0: ethernet-phy@0 {
-		compatible = "ethernet-phy-id03a2.9461";
-		reg = <0>;
-		phy-mode = "gmii";
-		nvmem-cells = <&phy_calibration>;
-		nvmem-cell-names = "phy-cal-data";
-	};
 };
 
 &gsw {
@@ -155,16 +147,23 @@
 	interrupts = <38 IRQ_TYPE_LEVEL_HIGH>;
 	status = "okay";
 	
+	phy0: ethernet-phy@0 {
+	    compatible = "ethernet-phy-id03a2.9461";
+	    reg = <0>;
+	    phy-mode = "gmii";
+	    nvmem-cells = <&phy_calibration>;
+	    nvmem-cell-names = "phy-cal-data";
+	};
+	
 	port6: port@6 {
-        compatible = "mediatek,mt753x-port";
-        mediatek,ssc-on;
-        reg = <6>;
-        phy-mode = "sgmii";
-
+            compatible = "mediatek,mt753x-port";
+            mediatek,ssc-on;
+            reg = <6>;
+            phy-mode = "sgmii";
+        };
         fixed-link {
             speed = <2500>;
             full-duplex;
-        };
 	};
 };
 	
