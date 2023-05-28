@@ -53,6 +53,15 @@
 	status = "okay";
 };
 
+&xhci {
+	mediatek,u3p-dis-msk = <0x0>;
+	phys = <&u2port0 PHY_TYPE_USB2>,
+	       <&u3port0 PHY_TYPE_USB3>;
+	pinctrl-0 = <&usb_pwr_pins>;
+	pinctrl-names = "default";
+	status = "okay";
+};
+
 &watchdog {
 	status = "okay";
 };
