@@ -4,17 +4,10 @@
 / {
         model = "Komi A31";
         compatible = "komi,a31", "mediatek,mt7981";
-
-        aliases {
-                led-boot = &red_led;
-                led-failsafe = &red_led;
-                led-running = &green_led;
-                led-upgrade = &green_led;
-        };
-
-        chosen {
-                bootargs = "console=ttyS0,115200n1 loglevel=8 earlycon=uart8250,mmio32,0x11002000";
-        };
+	chosen {
+		bootargs = "console=ttyS0,115200n1 loglevel=8  \
+				earlycon=uart8250,mmio32,0x11002000";
+	};
 
         memory {
                 reg = <0 0x40000000 0 0x10000000>;
@@ -23,18 +16,18 @@
         leds {
                 compatible = "gpio-leds";
 
-                green_led: led_green {
-                        label = "led_green";
+                green {
+                        label = "a31:green";
                         gpios = <&pio 8 GPIO_ACTIVE_LOW>;
                 };
 
-                led_blue {
-                        label = "led_blue";
+                blue {
+                        label = "a31:blue";
                         gpios = <&pio 13 GPIO_ACTIVE_LOW>;
                 };
 
-                red_led: led_red {
-                        label = "led_red";
+                red {
+                        label = "a31:red";
                         gpios = <&pio 34 GPIO_ACTIVE_LOW>;
                 };
         };
