@@ -716,6 +716,7 @@ setup_model()
 	*7981* |\
 	xiaomi,wr30u* |\
 	komi,a31 |\
+	*nx30pro* |\
 	cmcc,a10 |\
 	jcg,q30_pro |\
 	*360,t7*)
