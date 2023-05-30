@@ -108,6 +108,18 @@ mediatek_setup_macs()
 			fi
 		fi
 		;;
+	*h3c,nx30pro*)
+        	if [ "$(mtk_factory_get_byte "Factory" 4 2)" = "00-0c" ]; then
+        	wan_mac=$(dd if=/dev/mtd7 skip=684 count=1  2>/dev/null |grep "^ethaddr=" | awk -F '=' '{print $2}')
+        	lan_mac=$(macaddr_add "$wan_mac" 1)
+		local wifi_mac="$(macaddr_add $wan_mac 0x2)"
+		mtk_facrory_write_mac "Factory" 4 $wifi_mac
+		else
+		local wifi_mac=$(mtd_get_mac_binary $part_name 4)
+		lan_mac="$(macaddr_add $wifi_mac -1)"
+		wan_mac="$(macaddr_add $wifi_mac -2)"
+		fi
+        	;;
 	*xiaomi,wr30u*)
 		wan_mac=$(mtd_get_mac_ascii Bdata ethaddr_wan)
 		lan_mac=$(mtd_get_mac_ascii Bdata ethaddr)
