@@ -12,15 +12,19 @@ case "$(board_name)" in
 	ucidef_set_led_default "green" "GREEN" "360t7:green" "1"
 	ucidef_set_led_default "red" "RED" "360t7:red" "0"
 	;;
+*h3c,nx30pro*)
+	ucidef_set_led_default "green" "GREEN" "nx30pro:green" "1"
+	ucidef_set_led_default "red" "RED" "nx30pro:red" "0"
+;;
 xiaomi,wr30u*)
         ucidef_set_led_default "sys_blue" "BLUE" "led_blue" "1"
         ucidef_set_led_default "sys_yellow" "YELLOW" "led_yellow" "0"
         ucidef_set_led_netdev "net_blue" "NET_BLUE" "net_blue" "eth1"
 	;;
 komi,a31)
-        ucidef_set_led_default "green" "GREEN" "led_green" "1"
-        ucidef_set_led_default "red" "RED" "led_red" "0"
-        ucidef_set_led_netdev "blue" "BLUE" "led_blue" "eth1"
+        ucidef_set_led_default "green" "GREEN" "a31:green" "1"
+        ucidef_set_led_default "red" "RED" "a31:red" "0"
+        ucidef_set_led_netdev "blue" "BLUE" "a31:blue" "eth1"
         ;;
 *jcg,q30_pro*)
 	ucidef_set_led_default "green" "GREEN" "led_green" "1"
