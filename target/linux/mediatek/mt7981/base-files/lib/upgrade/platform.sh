@@ -6,6 +6,7 @@ platform_do_upgrade() {
 	case "$board" in
 	*360,t7* |\
 	*xiaomi,wr30u* |\
+	*nx30pro* |\
 	*komi,a31* |\
 	*cmcc,a10* |\
 	*jcg,q30_pro* |\
@@ -32,6 +33,7 @@ platform_check_image() {
 	case "$board" in
 	*360,t7* |\
 	*xiaomi,wr30u* |\
+	*nx30pro* |\
 	*komi,a31* |\
 	*cmcc,a10* |\
 	*jcg,q30_pro* |\
