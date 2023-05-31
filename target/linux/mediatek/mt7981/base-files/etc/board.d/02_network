@@ -127,7 +127,9 @@ mediatek_setup_macs()
 	*komi,a31*)
                 lan_mac=$(mtd_get_mac_ascii "u-boot-env" ethaddr)
                 wan_mac=$(macaddr_add "$lan_mac" 1)
-                ;;
+		local wifi_mac="$(macaddr_add $wan_mac 0x2)"
+		mtk_facrory_write_mac "Factory" 4 $wifi_mac
+        	;;
 	*jcg,q30_pro*)
                 lan_mac=$(mtd_get_mac_ascii "u-boot-env" ethaddr)
                 wan_mac=$(macaddr_add "$lan_mac" 1)
