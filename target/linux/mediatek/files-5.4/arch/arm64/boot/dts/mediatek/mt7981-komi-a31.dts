@@ -12,6 +12,15 @@
         memory {
                 reg = <0 0x40000000 0 0x10000000>;
         };
+	
+	reg_3p3v: regulator-3p3v {
+		compatible = "regulator-fixed";
+		regulator-name = "fixed-3.3V";
+		regulator-min-microvolt = <3300000>;
+		regulator-max-microvolt = <3300000>;
+		regulator-boot-on;
+		regulator-always-on;
+	};
 
         leds {
                 compatible = "gpio-leds";
@@ -102,6 +111,18 @@
 
 &watchdog {
         status = "okay";
+};
+
+&mmc0 {
+         pinctrl-names = "default", "state_uhs";
+         pinctrl-0 = <&mmc0_pins_default>;
+         pinctrl-1 = <&mmc0_pins_uhs>;
+         bus-width = <8>;
+         max-frequency = <52000000>;
+         cap-mmc-highspeed;
+         vmmc-supply = <&reg_3p3v>;
+         non-removable;
+         status = "okay";
 };
 
 &eth {
@@ -240,6 +261,20 @@
                         bias-pull-down = <MTK_PUPD_SET_R1R0_11>;
                 };
         };
+	
+	mmc0_pins_default: mmc0-pins-default {
+		mux {
+			function = "flash";
+			groups = "emmc_45";
+		};
+	};
+
+	mmc0_pins_uhs: mmc0-pins-uhs {
+		mux {
+			function = "flash";
+			groups = "emmc_45";
+		};
+	};
 
         uart1_pins: uart1-pins-g1 {
                 mux {
